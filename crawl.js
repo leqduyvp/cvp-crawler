@@ -49,11 +49,9 @@ function crawlPoint(sbd) {
           dataObject[schema[key]] = parseFloat(dataLine[key]);
         else dataObject[schema[key]] = dataLine[key];
       });
+      console.log(dataObject["SBD"]);
       if (isNaN(dataObject["Van"])) return "";
       return dataLine.join(",") + "\n";
-    })
-    .catch((err) => {
-      if (err.response) console.log(err.response.data);
     });
 }
 
@@ -65,9 +63,10 @@ function slowPush(counter) {
         slowPush(counter + 1);
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response) console.log(err.response.data);
+        slowPush(counter + 1);
       });
   }
 }
 
-slowPush(000000);
+slowPush(085000);
